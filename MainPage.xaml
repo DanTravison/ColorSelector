@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:ColorSelectorSample.Model"
+             xmlns:controls="clr-namespace:ColorSelectorSample.Controls"
+             xmlns:sf="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             x:Class="ColorSelectorSample.MainPage"
+             x:DataType="model:ColorViewModel"
+             >
+    
+    <ContentPage.Resources>
+
+        <Style TargetType="Ellipse"
+               x:Key="ListItemColor">
+            <Setter Property="Fill"
+                    Value="{Binding Color}"/>
+            <Setter Property="WidthRequest"
+                    Value="20"/>
+            <Setter Property="HeightRequest"
+                    Value="20"/>
+            <Setter Property="VerticalOptions"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="0"/>
+
+        </Style>
+        
+        <Style TargetType="Label"
+               x:Key="ListItemLabel"
+               >
+            <Setter Property="HorizontalTextAlignment"
+                    Value="Start"/>
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center"/>
+            <Setter Property="FontSize"
+                    Value="Medium"/>
+            <Setter Property="Margin"
+                    Value="5,0,0,0"/>
+            <Setter Property="Text"
+                    Value="{Binding Name}"/>
+        </Style>
+
+         <DataTemplate x:Key="NamedColorItemTemplate"
+                      x:DataType="model:NamedColor">
+            <Grid Margin="0"
+                  HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Ellipse Grid.Column="0"
+                         Style="{StaticResource ListItemColor}"/>
+                <Label Grid.Column="1"
+                       Style="{StaticResource ListItemLabel}"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SelectedNamedColorItemTemplate"
+                      x:DataType="model:NamedColor">
+            <Grid Margin="0"
+                  HorizontalOptions="Center"
+                  BackgroundColor="CornflowerBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Ellipse Grid.Column="0"
+                         Style="{StaticResource ListItemColor}"/>
+                <Label Grid.Column="1"
+                       Style="{StaticResource ListItemLabel}"/>
+            </Grid>
+        </DataTemplate>
+
+    </ContentPage.Resources>
+    
+    <Grid HorizontalOptions="Fill"
+          Margin="10,0,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <controls:ColorWheel Grid.Row="0" 
+                             Grid.Column="0" 
+                             Color="{Binding Color, Mode=OneWayToSource}"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill"
+                             />
+
+        <Grid Grid.Row="0" 
+              Grid.Column="1"
+              Grid.RowSpan="2"
+              >
+            <Grid.RowDefinitions>
+                <!-- Sliders -->
+                <RowDefinition Height="Auto"/>
+                <!-- Color names -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Style="{StaticResource GroupBorderStyle}"
+                    Grid.Row="0"
+                    BindingContext="{Binding}"
+                    Margin="10,0,0,0"
+                    >
+                <Grid Grid.Column="1"
+                      Grid.Row="0"
+                      Grid.RowSpan="2"
+                      Margin="10,5,10,5"
+                      >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <controls:ColorSlider Grid.Row="0" 
+                                          Text="Red"
+                                          Value="{Binding Red, Mode=TwoWay}"/>
+                    <controls:ColorSlider Grid.Row="1" 
+                                          Text="Green"
+                                          Value="{Binding Green, Mode=TwoWay}"/>
+                    <controls:ColorSlider Grid.Row="2" 
+                                          Text="Blue"
+                                          Value="{Binding Blue, Mode=TwoWay}"/>
+
+                    <controls:ColorSlider Grid.Row="3" 
+                                          Text="Alpha"
+                                          Value="{Binding Alpha, Mode=TwoWay}"/>
+
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource GroupBorderStyle}"
+                    Grid.Row="1"
+                    Margin="10,10,0,0"
+                    >
+                <sf:SfListView x:Name="NamedColors"
+                               SelectionMode="Single"
+                               ItemsSource="{Binding Colors}"
+                               SelectedItem="{Binding Colors.SelectedItem, Mode=TwoWay}"
+                               ItemTemplate="{StaticResource NamedColorItemTemplate}"
+                               SelectedItemTemplate="{StaticResource SelectedNamedColorItemTemplate}"
+                               Orientation="Vertical"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"
+                               AutoFitMode="Height" />
+            </Border>
+        </Grid>
+
+        <Rectangle Margin="0,5,0,0"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   StrokeThickness="1"
+                   Stroke="Gray"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"
+                   Fill="{Binding Color, Mode=OneWay}"
+                   />
+
+    </Grid>
+</ContentPage>

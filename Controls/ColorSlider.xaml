@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ColorSelectorSample.Controls"
+             x:Class="ColorSelectorSample.Controls.ColorSlider"
+             x:Name="root">
+    
+    <ContentView.Resources>
+
+        <Style x:Key="SliderLabelStyle"
+               TargetType="controls:Label"
+               >
+            <Setter Property="HorizontalTextAlignment"
+                    Value="Start"/>
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center"/>
+            <Setter Property="DesiredWidth"
+                    Value="5"/>
+            <Setter Property="FontSize"
+                    Value="Medium"/>
+        </Style>
+
+        <Style x:Key="SliderValueStyle"
+               TargetType="controls:Label"
+               >
+            <Setter Property="HorizontalTextAlignment"
+                    Value="End"/>
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="5,0,0,0"/>
+            <Setter Property="DesiredWidth"
+                    Value="3"/>
+            <Setter Property="FontSize"
+                    Value="Medium"/>
+        </Style>
+
+        <Style x:Key="SliderStyle"
+               TargetType="Slider">
+            <Setter Property="Minimum"
+                    Value="0" />
+            <Setter Property="Maximum"
+                    Value="255" />
+            <Setter Property="HorizontalOptions"
+                    Value="Fill" />
+        </Style>
+
+        <Style x:Key="SliderCommand"
+               TargetType="Label"
+               >
+            <Setter Property="FontAttributes"
+                    Value="Bold"/>
+            <Setter Property="HorizontalTextAlignment"
+                    Value="Center"/>
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center"/>
+            <Setter Property="Padding"
+                    Value="5,0,5,0"/>
+            <Setter Property="FontSize"
+                    Value="Medium"/>
+        </Style>
+        
+    </ContentView.Resources>
+    
+    <Grid Margin="5,0,5,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <controls:Label Grid.Column="0" 
+                        Text="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=Text, Mode=OneWay}"
+                        Style="{StaticResource SliderLabelStyle}"
+                        />
+
+        <Label Grid.Column="1" 
+               Text="&lt;"
+               Style="{StaticResource SliderCommand}"
+               ToolTipProperties.Text="Decrease"
+               >
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnDecrementTapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Slider Grid.Column="2" 
+                x:Name="Slider" 
+                Value="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=Value, Mode=TwoWay}"
+                Style="{StaticResource SliderStyle}"
+                />
+
+        <Label Grid.Column="3" 
+               Text="&gt;"
+               Style="{StaticResource SliderCommand}"
+               ToolTipProperties.Text="Increase"
+               >
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnIncrementTapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <controls:Label Grid.Column="4" 
+                        Text="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=Value, Mode=OneWay}" 
+                        Style="{StaticResource SliderValueStyle}"
+                        />
+
+    </Grid>
+</ContentView>
