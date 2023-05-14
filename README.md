@@ -1,6 +1,8 @@
 ## ColorSelector
 Experiment with Maui color selector.
 
+![Screen Shot](ScreenShot.png)
+
 The Color selector provides a user interface that supports choosing a color by name, by RGBA or by selecting a pixel in a color wheel.
 
 Additionally, when using the color wheel or RGBA sliders, if the underlying ARGB values match a named color, it is selected in the color list. This is useful for cases where you prefer a named color over an RGBA value. 
