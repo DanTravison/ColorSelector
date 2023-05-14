@@ -127,11 +127,19 @@ public sealed class ColorWheel : SKCanvasView
         {
             for (int x = 0; x < diameter; x++)
             {
+                SKColor skColor;
                 double distance = Math.Sqrt(Math.Pow(radius - x, 2) + Math.Pow(radius - y, 2));
                 double saturation = distance / radius;
                 if (saturation >= 1)
                 {
-                    continue;
+                    if (x < radius)
+                    {
+                        skColor = SKColors.Black;
+                    }
+                    else
+                    {
+                        skColor = SKColors.White;
+                    }
                 }
                 else
                 {
@@ -144,9 +152,9 @@ public sealed class ColorWheel : SKCanvasView
                     }
                     double hue = theta / (Math.PI * 2) * 360.0;
                     HSBColor hsb = new HSBColor(255, hue, saturation, 1.0);
-                    SKColor skColor = ToSkColor(hsb);
-                    pixels[row + x] = skColor;
+                    skColor = ToSkColor(hsb);
                 }
+                pixels[row + x] = skColor;
             }
             row += diameter;
         }

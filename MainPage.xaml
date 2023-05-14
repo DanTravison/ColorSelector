@@ -84,13 +84,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <controls:ColorWheel Grid.Row="0" 
-                             Grid.Column="0" 
-                             Color="{Binding Color, Mode=OneWayToSource}"
-                             HorizontalOptions="Fill"
-                             VerticalOptions="Fill"
-                             />
-
+        <Border Style="{StaticResource GroupBorderStyle}"
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0"
+                >
+            <controls:ColorWheel Color="{Binding Color, Mode=OneWayToSource}"
+                                 HorizontalOptions="Fill"
+                                 VerticalOptions="Fill"
+                                 />
+        </Border>
         <Grid Grid.Row="0" 
               Grid.Column="1"
               Grid.RowSpan="2"
